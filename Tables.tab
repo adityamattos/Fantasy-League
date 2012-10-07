@@ -1,0 +1,109 @@
+/************************************************************************
+*  Description:   Table creation scripts.
+*  Author:        Aditya
+*  Version:       1.0
+*  Date:          07-10-2012
+*************************************************************************/
+
+   
+   CREATE TABLE user
+   {
+      user_id           NUMBER   PRIMARY KEY,
+      user_name         VARCHAR2(240),
+      password          VARCHAR2(240),
+      created_by        NUMBER,
+      creation_date     DATE,
+      last_updated_by   NUMBER,
+      last_updated_date DATE
+   };
+   
+   CREATE TABLE user_details
+   {
+      user_id           NUMBER   FOREIGN KEY REFERENCES user(user_id),
+      email             VARCHAR2(240),
+      address           VARCHAR2(1000),   
+      created_by        NUMBER   FOREIGN KEY REFERENCES user(user_id),
+      creation_date     DATE,
+      last_updated_by   NUMBER   FOREIGN KEY REFERENCES user(user_id),
+      last_updated_date DATE
+   };
+   
+   CREATE TABLE team
+   {
+      team_id           NUMBER,
+      team_name         VARCHAR2(240),
+      created_by        NUMBER   FOREIGN KEY REFERENCES user(user_id),
+      creation_date     DATE,
+      last_updated_by   NUMBER   FOREIGN KEY REFERENCES user(user_id),
+      last_updated_date DATE
+   };
+   
+   CREATE TABLE player
+   {
+      player_id         NUMBER,
+      player_name       VARCHAR2(240),
+      team_id           NUMBER FOREIGN KEY REFERENCES team(team_id),
+      created_by        NUMBER   FOREIGN KEY REFERENCES user(user_id),
+      creation_date     DATE,
+      last_updated_by   NUMBER   FOREIGN KEY REFERENCES user(user_id),
+      last_updated_date DATE
+   };   
+      
+   CREATE TABLE matches
+   {
+      match_id             NUMBER,
+      home_team_id         NUMBER FOREIGN KEY REFERENCES team(team_id),
+      away_team_id         NUMBER FOREIGN KEY REFERENCES team(team_id),
+      winning_team_id      NUMBER FOREIGN KEY REFERENCES team(team_id),
+      winning_team_runs    NUMBER,
+      losing_team_runs     NUMBER,
+      winning_team_wickets NUMBER,
+      losing_team_wickets  NUMBER,
+      winning_team_overs   NUMBER,
+      losing_team_overs    NUMBER,
+      created_by           NUMBER   FOREIGN KEY REFERENCES user(user_id),
+      creation_date        DATE,
+      last_updated_by      NUMBER   FOREIGN KEY REFERENCES user(user_id),
+      last_updated_date    DATE
+   };        
+      
+   CREATE TABLE player_stats
+   {
+      match_id             NUMBER FOREIGN KEY REFERENCES matches(match_id),
+      player_id            NUMBER FOREIGN KEY REFERENCES player(player_id),
+      team_id              NUMBER FOREIGN KEY REFERENCES team(team_id),
+      runs                 NUMBER,
+      strike_rate          NUMBER,
+      balls_faced          NUMBER,
+      overs_bowled         NUMBER,
+      economy              NUMBER,
+      wickets              NUMBER,
+      catches              NUMBER,
+      run_outs             NUMBER,
+      created_by           NUMBER   FOREIGN KEY REFERENCES user(user_id),
+      creation_date        DATE,
+      last_updated_by      NUMBER   FOREIGN KEY REFERENCES user(user_id),
+      last_updated_date    DATE
+   };  
+      
+   CREATE TABLE user_team
+   {
+      user_id              NUMBER   FOREIGN KEY REFERENCES user(user_id),
+      player1              NUMBER FOREIGN KEY REFERENCES player(player_id),
+      player2              NUMBER FOREIGN KEY REFERENCES player(player_id),
+      player3              NUMBER FOREIGN KEY REFERENCES player(player_id),
+      player4              NUMBER FOREIGN KEY REFERENCES player(player_id),
+      player5              NUMBER FOREIGN KEY REFERENCES player(player_id),
+      player6              NUMBER FOREIGN KEY REFERENCES player(player_id),
+      player7              NUMBER FOREIGN KEY REFERENCES player(player_id),
+      player8              NUMBER FOREIGN KEY REFERENCES player(player_id),
+      player9              NUMBER FOREIGN KEY REFERENCES player(player_id),
+      player10             NUMBER FOREIGN KEY REFERENCES player(player_id),
+      player11             NUMBER FOREIGN KEY REFERENCES player(player_id),
+      score                NUMBER
+      created_by           NUMBER   FOREIGN KEY REFERENCES user(user_id),
+      creation_date        DATE,
+      last_updated_by      NUMBER   FOREIGN KEY REFERENCES user(user_id),
+      last_updated_date    DATE
+   };  
+     
